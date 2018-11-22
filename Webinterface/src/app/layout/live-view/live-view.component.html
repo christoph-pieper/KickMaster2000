@@ -1,0 +1,20 @@
+<mat-card class="live-view mat-elevation-z24" [@changeState]="isOpen ? 'shown' : 'hidden'">
+  <mat-card-content>
+    <div class="live-view-flex">
+      <div class="live-view-flex-item">
+          <img src="{{apiUrl}}api/v1/users/123/image" height="64" width="64">
+          <h3>Fabian</h3>
+        </div>
+        <div class="live-view-flex-item">
+          <h1 class="scoreboard">2:5</h1>
+          <h3>Spielstand</h3>
+        </div>
+        <div class="live-view-flex-item">
+          <img src="{{apiUrl}}api/v1/users/123/image" height="64" width="64">
+          <h3>Fabian</h3>
+        </div>
+      </div>
+  </mat-card-content>
+</mat-card>
+
+
