@@ -2,22 +2,22 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source files">
-      <UniqueIdentifier>{15dee6fd-bf43-4bbd-85df-1d5f43aa829c}</UniqueIdentifier>
+      <UniqueIdentifier>{1f4e1e28-5b68-403c-bae6-497825a57014}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header files">
-      <UniqueIdentifier>{e9bcf68c-eae8-4e0f-bb44-8152d2b83cb6}</UniqueIdentifier>
+      <UniqueIdentifier>{6e3c036d-5f2f-4212-9345-5530fdaff0e0}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource files">
-      <UniqueIdentifier>{cbbccb33-247b-4af5-98a7-79960c21d8c1}</UniqueIdentifier>
+      <UniqueIdentifier>{9c71ae43-2ce2-4fc1-bc01-28dc10dac32c}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Make files">
-      <UniqueIdentifier>{c275b12e-361f-4354-bf43-34ec46b74f30}</UniqueIdentifier>
+      <UniqueIdentifier>{a2d815d0-030e-4a56-ac55-688f3aca3b0d}</UniqueIdentifier>
     </Filter>
     <Filter Include="VisualGDB settings">
-      <UniqueIdentifier>{bcca4e23-cfcd-4598-94af-c80c646a8db8}</UniqueIdentifier>
+      <UniqueIdentifier>{5c8f32ac-6a03-47ac-9135-434eb012894a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
