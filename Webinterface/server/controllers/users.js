@@ -58,7 +58,6 @@ router.post('/:id/image', fileUpload, function(req, res) {
         if (err || !user) {
           res.sendStatus(500);
         } else {
-          res.setHeader('Content-Type', user.image.contentType);
           res.send(user.image.data);
         }
       });

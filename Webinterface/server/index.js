@@ -38,24 +38,22 @@ app.use(
 );
 
 
-const version = "v1";
-const rootpath = "/api/" + version + "/";
-
-router.use(rootpath + "users", require("./controllers/users"));
-
-app.use(router);
-
 const server = require('http').createServer(app);
-
-const io = require('socket.io')(server);
-
-io.on('connect', (socket) => {
-  console.log('connected');
-});
-
 
 server.listen(port, () => {
   console.log('Server hört auf Port: ' + port);
 });
 
+const io = require('socket.io')(server);
 
+const version = "v1";
+const rootpath = "/api/" + version + "/";
+
+router.use(rootpath + "users", require("./controllers/users"));
+router.use(rootpath + "live", require("./controllers/live")(io));
+
+app.use(router);
+
+io.on('connect', (socket) => {
+  console.log('connected');
+});

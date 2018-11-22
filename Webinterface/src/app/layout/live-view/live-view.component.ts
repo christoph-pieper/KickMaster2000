@@ -1,6 +1,9 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { LiveService } from './../../services/websocket/live.service';
+import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/entities/user';
 
 @Component({
   selector: 'app-live-view',
@@ -23,23 +26,40 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ]
 })
-export class LiveViewComponent implements OnInit, AfterViewInit {
+export class LiveViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   apiUrl = environment.apiUrl;
 
   isOpen: boolean;
+  liveSubscription: Subscription;
 
-  constructor() {
+  player1: User;
+  player2: User;
+
+  constructor(
+    public liveService: LiveService
+  ) {
     this.isOpen = false;
   }
 
   ngOnInit() {
+    this.liveSubscription = this.liveService.getMessageObserver().subscribe( (msg) => {
+      if (msg.action === 'startgame') {
+        this.isOpen = true;
+        this.player1 = msg.payload.player1;
+        this.player2 = msg.payload.player2;
+      } else if (msg.action === 'stopgame') {
+        this.isOpen = false;
+      }
+    });
   }
 
   ngAfterViewInit() {
-    setTimeout( () => {
-      this.isOpen = true;
-    }, 3000);
+
+  }
+
+  ngOnDestroy() {
+    this.liveSubscription.unsubscribe();
   }
 
 }

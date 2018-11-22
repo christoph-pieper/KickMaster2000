@@ -1,3 +1,4 @@
+import { LiveService } from './services/websocket/live.service';
 import { SidenavComponent } from './layout/sidenav/sidenav.component';
 import { MainComponent } from './pages/main/main.component';
 import { AppRoutes } from './app.routes';
@@ -20,7 +21,8 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatCardModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatToolbarModule
 } from '@angular/material';
 import { UsersComponent } from './pages/users/users.component';
 import { ModifyUserComponent } from './dialogs/modify-user/modify-user.component';
@@ -28,6 +30,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './services/user-service.service';
 import { LiveViewComponent } from './layout/live-view/live-view.component';
+import { WebsocketService } from './services/websocket/websocket.service';
+
+import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
+import { environment } from 'src/environments/environment';
+
+const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
+
 
 @NgModule({
   declarations: [
@@ -43,6 +52,7 @@ import { LiveViewComponent } from './layout/live-view/live-view.component';
       AppRoutes // <-- debugging purposes only
     ),
     BrowserModule,
+    SocketIoModule.forRoot(config),
     BrowserAnimationsModule,
     FileUploadModule,
     HttpClientModule,
@@ -58,10 +68,13 @@ import { LiveViewComponent } from './layout/live-view/live-view.component';
     MatFormFieldModule,
     MatGridListModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatToolbarModule
   ],
   providers: [
-    UserServiceService
+    UserServiceService,
+    LiveService,
+    WebsocketService
   ],
   entryComponents: [
     ModifyUserComponent
