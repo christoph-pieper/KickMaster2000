@@ -1,0 +1,7 @@
+﻿{
+    "user":"tippkick",
+    "pwd":"tippkick",
+    "url":"localhost",
+    "port":27017,
+    "dbname":"tippkick"
+}

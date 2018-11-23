@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{headline}}</h1>
+<div mat-dialog-content>
+
+  <p *ngIf="user._id">
+    <img src="{{apiUrl}}api/v1/users/{{user._id}}/image?random={{imageRandom}}" height="128" width="128" alt="Not Found">
+    <button mat-icon-button (click)="deleteImage()">
+        <mat-icon class="mat-18">clear</mat-icon>
+    </button>
+    <p-fileUpload name="image" url="{{apiUrl}}api/v1/users/{{user._id}}/image" accept="image/*" auto="true" (onUpload)="imageUploadFinished($event.xhr)"></p-fileUpload>
+
+    <audio controls>
+      <source src="{{apiUrl}}api/v1/users/{{user._id}}/audio?random={{audioRandom}}">
+      Your browser does not support the audio element.
+    </audio>
+    <button mat-icon-button (click)="deleteAudio()">
+      <mat-icon class="mat-18">clear</mat-icon>
+    </button>
+    <p-fileUpload name="audio" url="{{apiUrl}}api/v1/users/{{user._id}}/audio" accept="audio/*" auto="true" (onUpload)="audioUploadFinished($event.xhr)"></p-fileUpload>
+  </p>
+
+  <mat-form-field>
+    <input matInput [(ngModel)]="user.name" cdkFocusInitial placeholder="Name">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!user._id">
+    <input matInput type="password" [(ngModel)]="user.password" cdkFocusInitial placeholder="Passwort">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onSave()">Ok</button>
+  <button mat-button (click)="onNoClick()">Schließen</button>
+</div>
