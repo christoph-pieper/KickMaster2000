@@ -34,6 +34,7 @@ import { WebsocketService } from './services/websocket/websocket.service';
 
 import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 import { environment } from 'src/environments/environment';
+import { RulesComponent } from './pages/rules/rules.component';
 
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
@@ -45,7 +46,8 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     UsersComponent,
     SidenavComponent,
     ModifyUserComponent,
-    LiveViewComponent
+    LiveViewComponent,
+    RulesComponent
   ],
   imports: [
     RouterModule.forRoot(

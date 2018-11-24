@@ -1,0 +1,7 @@
+div.mat-dialog-content{
+  display: flex;
+}
+
+.column{
+  flex: 1;
+}

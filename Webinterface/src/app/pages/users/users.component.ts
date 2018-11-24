@@ -39,19 +39,23 @@ export class UsersComponent implements OnInit {
       data: user
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (user) {
-        user = result;
-      } else {
-        this.dataSource.data.push(result);
-        console.log(this.dataSource.data);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (user) {
+          user = result;
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+        } else {
+          this.dataSource.data.push(result);
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+        }
       }
     });
   }
 
   deleteUser(user: User) {
     this.userService.delete(user).subscribe( (res) => {
-      this.dataSource = this.dataSource.data.splice(this.dataSource.data.indexOf(user), 1);
+      this.dataSource.data.splice(this.dataSource.data.indexOf(user), 1);
+      this.dataSource = new MatTableDataSource(this.dataSource.data);
     }, (err) => {
       console.log('error');
     });

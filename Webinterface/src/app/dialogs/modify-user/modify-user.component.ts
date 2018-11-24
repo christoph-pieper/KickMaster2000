@@ -42,15 +42,13 @@ export class ModifyUserComponent implements OnInit {
   onSave() {
     if (this.user._id) {
       this.userService.put(this.user).subscribe( (res) => {
-        console.log(res);
-        this.dialogRef.close(this.user);
+        this.dialogRef.close(res);
       }, (err) => {
         console.log(err);
       });
     } else {
       this.userService.create(this.user).subscribe( (res) => {
-        console.log(res);
-        this.dialogRef.close(this.user);
+        this.dialogRef.close(res);
       }, (err) => {
         console.log(err);
       });
@@ -58,7 +56,7 @@ export class ModifyUserComponent implements OnInit {
   }
 
   onNoClick() {
-    this.dialogRef.close(this.user);
+    this.dialogRef.close();
   }
 
   imageUploadFinished(xhr) {
