@@ -19,7 +19,40 @@ module.exports = function(io) {
   });
 
 
-
+/**
+ * @swagger
+ *
+ * /api/v1/live/startgame:
+ *   post:
+ *     tags:
+ *       - EndpointsForChristoph
+ *     description: Starts a game
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Data
+ *         description: Data
+ *         in:  body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           required:
+ *             - player1
+ *             - player2
+ *             - timeInSeconds
+ *           properties:
+ *             player1:
+ *               type: string
+ *             player2:
+ *               type: string
+ *             timeInSeconds:
+ *               type: integer
+ *     responses:
+ *       204:
+ *         description: Accepted
+ *       400:
+ *         description: Bad Request
+ */
   router.post('/startgame', function(req, res) {
     User.findById(req.body.player1, (err, player1) => {
       if(!err && player1) {
@@ -29,21 +62,38 @@ module.exports = function(io) {
               action: 'startgame',
               payload: {
                 'player1': player1,
-                'player2': player2
+                'player2': player2,
+                timeInSeconds: req.body.timeInSeconds
               }
             });
             res.sendStatus(HttpStatus.NO_CONTENT);
           }else{
-            res.sendStatus(HttpStatus.NOT_FOUND);
+            res.sendStatus(HttpStatus.BAD_REQUEST);
           }
         })
       }else{
-        res.sendStatus(HttpStatus.NOT_FOUND);
+        res.sendStatus(HttpStatus.BAD_REQUEST);
       }
     })
     // res.sendStatus(HttpStatus.NO_CONTENT);
   });
 
+  /**
+ * @swagger
+ *
+ * /api/v1/live/stopgame:
+ *   post:
+ *     tags:
+ *       - EndpointsForChristoph
+ *     description: Stops a game
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       204:
+ *         description: Accepted
+ *       209:
+ *         description: Already Reported
+ */
   router.post('/stopgame', function(req, res) {
     io.emit('message', {
       action: 'stopgame',

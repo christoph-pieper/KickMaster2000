@@ -1,10 +1,36 @@
 const port = 8000;
 
+global.__basedir = __dirname;
 
+var swaggerJSDoc = require('swagger-jsdoc');
 const express = require("express"),
   router = express.Router();
 
   const app = express();
+
+  // swagger definition
+var swaggerDefinition = {
+  info: {
+    title: 'Node Swagger API',
+    version: '1.0.0',
+    description: 'Demonstrating how to describe a RESTful API with Swagger',
+  },
+  host: 'localhost:8000',
+  basePath: '/',
+};
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: [ __basedir + '/controllers/**/*.js'],// pass all in array
+
+  };
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
 
 const cors = require("cors");
 app.use(
@@ -14,7 +40,6 @@ app.use(
   })
 );
 
-global.__basedir = __dirname;
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json()); // support json encoded bodies
@@ -39,6 +64,7 @@ app.use(
 
 
 const server = require('http').createServer(app);
+const path = require('path');
 
 server.listen(port, () => {
   console.log('Server hört auf Port: ' + port);
@@ -52,7 +78,34 @@ const rootpath = "/api/" + version + "/";
 router.use(rootpath + "users", require("./controllers/users"));
 router.use(rootpath + "live", require("./controllers/live")(io));
 
+
+const allowedExt = [
+  '.js',
+  '.ico',
+  '.css',
+  '.png',
+  '.jpg',
+  '.woff2',
+  '.woff',
+  '.ttf',
+  '.svg',
+];
+
+/* app.get('*', (req, res) => {
+  if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+    res.sendFile(path.resolve(`public/${req.url}`));
+  } else {
+    res.sendFile(path.resolve('dist/Webinterface/index.html'));
+}
+})*/
+
 app.use(router);
+
+const swaggerUi = require('swagger-ui-express');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.get('/swagger.json', function(req, res) {   res.setHeader('Content-Type', 'application/json');   res.send(swaggerSpec); });
 
 io.on('connect', (socket) => {
   console.log('connected');

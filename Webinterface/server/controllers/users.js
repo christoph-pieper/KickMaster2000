@@ -14,8 +14,33 @@ const fileUpload = multer({
   }
 }).fields([{ name: 'image', maxCount: 1 }]);
 
-// Define routes handling profile requests
+/**
+ * @swagger
+ * definition:
+ *   users:
+ *     properties:
+ *       _id:
+ *         type: string
+ *       name:
+ *         type: string
+ */
 
+/**
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     tags:
+ *       - users
+ *     description: Returns all users
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         type: array
+ *         items:
+ *           $ref: '#/definitions/users'
+ */
 router.get('/', function(req, res) {
   User.find({}, { password: 0, image: 0 }, (err, user) => {
     if (err || !user) {

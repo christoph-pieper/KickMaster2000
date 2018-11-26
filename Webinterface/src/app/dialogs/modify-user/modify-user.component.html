@@ -36,26 +36,31 @@
     ></p-fileUpload>
   </p>
 
-  <p class="column">
-    <mat-form-field>
-      <input
-        matInput
-        [(ngModel)]="user.name"
-        cdkFocusInitial
-        placeholder="Name"
-      />
-    </mat-form-field>
-
-    <mat-form-field *ngIf="!user._id">
-      <input
-        matInput
-        type="password"
-        [(ngModel)]="user.password"
-        cdkFocusInitial
-        placeholder="Passwort"
-      />
-    </mat-form-field>
+  <div class="column">
+    <p>
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="user.name"
+          cdkFocusInitial
+          placeholder="Name"
+          (keyup.enter)="onSave()"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field *ngIf="!user._id">
+        <input
+          matInput
+          type="password"
+          [(ngModel)]="user.password"
+          cdkFocusInitial
+          placeholder="Passwort"
+          (keyup.enter)="onSave()"
+        />
+      </mat-form-field>
   </p>
+  </div>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button (click)="onSave()">Ok</button>

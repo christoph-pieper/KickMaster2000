@@ -1,4 +1,4 @@
-<mat-card class="live-view mat-elevation-z24" *ngIf="player1 && player2" [@changeState]="isOpen ? 'shown' : 'hidden'">
+<mat-card class="live-view mat-elevation-z24" *ngIf="isOpen" [@changeStateBoard]="isOpen ? 'shown' : 'hidden'">
   <mat-card-content>
     <div class="live-view-flex">
       <div class="live-view-flex-item">
@@ -16,5 +16,10 @@
       </div>
   </mat-card-content>
 </mat-card>
-
+<div *ngIf="isOpen" class="time-board" [@changeStateProgressbar]="isOpen ? 'shown' : 'hidden'">
+  <div class="time-board-wrapper">
+    <mat-progress-bar color="warn" mode="determinate" [value]="timeValue"></mat-progress-bar>
+    <h1 class="time-text">{{timeLeft.minutes() | number:'2.0'}}:{{timeLeft.seconds() | number:'2.0'}}</h1>
+  <div>
+</div>
 

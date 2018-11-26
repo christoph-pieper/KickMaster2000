@@ -35,6 +35,7 @@ import { WebsocketService } from './services/websocket/websocket.service';
 import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 import { environment } from 'src/environments/environment';
 import { RulesComponent } from './pages/rules/rules.component';
+import { MomentModule } from 'ngx-moment';
 
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
@@ -53,8 +54,8 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     RouterModule.forRoot(
       AppRoutes // <-- debugging purposes only
     ),
-    BrowserModule,
     SocketIoModule.forRoot(config),
+    BrowserModule,
     BrowserAnimationsModule,
     FileUploadModule,
     HttpClientModule,
@@ -71,7 +72,8 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     MatGridListModule,
     MatCardModule,
     MatProgressBarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MomentModule
   ],
   providers: [
     UserServiceService,

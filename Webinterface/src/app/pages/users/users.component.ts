@@ -53,11 +53,13 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: User) {
-    this.userService.delete(user).subscribe( (res) => {
-      this.dataSource.data.splice(this.dataSource.data.indexOf(user), 1);
-      this.dataSource = new MatTableDataSource(this.dataSource.data);
-    }, (err) => {
-      console.log('error');
-    });
+    if(window.confirm('Sind Sie sicher, dass Sie den Spieler ' + user.name + ' löschen möchten?')) {
+      this.userService.delete(user).subscribe( (res) => {
+        this.dataSource.data.splice(this.dataSource.data.indexOf(user), 1);
+        this.dataSource = new MatTableDataSource(this.dataSource.data);
+      }, (err) => {
+        console.log('error');
+      });
+    }
   }
 }
