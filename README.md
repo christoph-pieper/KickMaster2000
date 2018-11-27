@@ -1,6 +1,8 @@
 # KickMaster2000
 Amazing IVU Tipp-Kick Clock
 
+Die Swagger-Dokumentation der konfigurierten REST-Endpoints kann nach Start des Development-Servers unter 'localhost:8000/api-docs' aufgerufen werden.
+
 Vorbereitungen: Der Webserver greift auf eine MongoDB zu. Diese muss vor dem Start des Servers (Punkt 3) gestartet werden. Die Zugangsdaten zur Datenbank können unter "./webinterface/server/database/dbconfig.json" gesetzt werden.
 
 
