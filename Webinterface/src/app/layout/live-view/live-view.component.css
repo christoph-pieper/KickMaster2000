@@ -82,6 +82,7 @@ div.time-board-wrapper{
   right: 2%;
   padding: 10px;
   border-radius: 5px;
+  border: 5px solid darkorange;
   background-color: black;
   animation-name: pulse;
   animation-duration: 1s;

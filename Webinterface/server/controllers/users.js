@@ -17,7 +17,7 @@ const fileUpload = multer({
 /**
  * @swagger
  * definition:
- *   users:
+ *   user:
  *     properties:
  *       _id:
  *         type: string
@@ -39,7 +39,7 @@ const fileUpload = multer({
  *         description: An array of users
  *         type: array
  *         items:
- *           $ref: '#/definitions/users'
+ *           $ref: '#/definitions/user'
  */
 router.get('/', function(req, res) {
   User.find({}, { password: 0, image: 0 }, (err, user) => {

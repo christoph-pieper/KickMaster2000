@@ -11,9 +11,9 @@ const express = require("express"),
   // swagger definition
 var swaggerDefinition = {
   info: {
-    title: 'Node Swagger API',
+    title: 'API Description for Tippkick-Uhr',
     version: '1.0.0',
-    description: 'Demonstrating how to describe a RESTful API with Swagger',
+    description: 'Endpoint Documentation',
   },
   host: 'localhost:8000',
   basePath: '/',

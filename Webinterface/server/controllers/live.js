@@ -4,7 +4,8 @@ const express = require('express'),
   HttpStatus = require('http-status-codes');
 
 
-
+var timeInterval;
+var game;
 
 
 module.exports = function(io) {
@@ -18,11 +19,53 @@ module.exports = function(io) {
     });
   });
 
+/**
+ * @swagger
+ * definition:
+ *   game:
+ *     properties:
+ *       player1:
+ *         $ref: '#/definitions/user'
+ *       player2:
+ *         $ref: '#/definitions/user'
+ *       scorePlayerOne:
+ *         type: integer
+ *       scorePlayerTwo:
+ *         type: integer
+ *       timeInSeconds:
+ *         type: integer
+ */
+
+  /**
+ * @swagger
+ *
+ * /api/v1/live/game:
+ *   get:
+ *     tags:
+ *       - EndpointsForChristoph
+ *     description: Gets current game
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       204:
+ *         description: Accepted
+ *         schema:
+ *           $ref: '#/definitions/game'
+ *       400:
+ *         description: Bad Request
+ */
+router.get('/game', function(req, res) {
+  if( game ){
+    res.json(game);
+  } else {
+    res.sendStatus(HttpStatus.NOT_FOUND);
+  }
+});
 
 /**
  * @swagger
  *
- * /api/v1/live/startgame:
+ * /api/v1/live/game:
  *   post:
  *     tags:
  *       - EndpointsForChristoph
@@ -35,36 +78,28 @@ module.exports = function(io) {
  *         in:  body
  *         required: true
  *         schema:
- *           type: object
- *           required:
- *             - player1
- *             - player2
- *             - timeInSeconds
- *           properties:
- *             player1:
- *               type: string
- *             player2:
- *               type: string
- *             timeInSeconds:
- *               type: integer
+ *           $ref: '#/definitions/game'
  *     responses:
- *       204:
+ *       200:
  *         description: Accepted
- *       400:
- *         description: Bad Request
+ *         schema:
+ *       404:
+ *         description: No Game running
  */
-  router.post('/startgame', function(req, res) {
-    User.findById(req.body.player1, (err, player1) => {
+  router.post('/game', function(req, res) {
+    User.findById(req.body.player1, {image: 0, password: 0}, (err, player1) => {
       if(!err && player1) {
-        User.findById(req.body.player2, (err, player2) => {
+        User.findById(req.body.player2, {image: 0, password: 0}, (err, player2) => {
           if(!err && player2) {
+            game = {
+              'player1': player1,
+              'player2': player2,
+              timeInSeconds: req.body.timeInSeconds
+            }
+            setTime();
             io.emit('message', {
               action: 'startgame',
-              payload: {
-                'player1': player1,
-                'player2': player2,
-                timeInSeconds: req.body.timeInSeconds
-              }
+              payload: game
             });
             res.sendStatus(HttpStatus.NO_CONTENT);
           }else{
@@ -81,8 +116,32 @@ module.exports = function(io) {
   /**
  * @swagger
  *
- * /api/v1/live/stopgame:
- *   post:
+ * /api/v1/live/game:
+ *   put:
+ *     tags:
+ *       - EndpointsForChristoph
+ *     description: Updates current game
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Accepted
+ *       400:
+ *         description: Bad request
+ */
+  router.put('/game', function(req, res) {
+    io.emit('message', {
+      action: 'updategame',
+      payload: game
+    });
+    res.sendStatus(HttpStatus.NO_CONTENT);
+  });
+
+    /**
+ * @swagger
+ *
+ * /api/v1/live/game:
+ *   delete:
  *     tags:
  *       - EndpointsForChristoph
  *     description: Stops a game
@@ -94,13 +153,33 @@ module.exports = function(io) {
  *       209:
  *         description: Already Reported
  */
-  router.post('/stopgame', function(req, res) {
-    io.emit('message', {
-      action: 'stopgame',
-      payload: req.body
-    });
-    res.sendStatus(HttpStatus.NO_CONTENT);
+router.delete('/game', function(req, res) {
+  clearTime();
+  io.emit('message', {
+    action: 'stopgame',
+    payload: {
+
+    }
   });
+  res.sendStatus(HttpStatus.NO_CONTENT);
+});
 
   return router;
 };
+
+
+
+setTime = () => {
+  if(game) {
+    timeInterval = setInterval( () => {
+      game.timeInSeconds = Math.max(game.timeInSeconds - 1, 0);
+      if (game.timeInSeconds === 0) {
+        clearTime();
+      }
+    }, 1000)
+  }
+}
+
+clearTime = () => {
+  clearInterval(timeInterval);
+}
