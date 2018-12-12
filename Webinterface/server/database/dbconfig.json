@@ -1,7 +1,7 @@
 ﻿{
-    "user":"tippkick",
+    "user":"root",
     "pwd":"tippkick",
     "url":"localhost",
-    "port":27017,
+    "port":3306,
     "dbname":"tippkick"
 }

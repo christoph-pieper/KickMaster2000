@@ -3,7 +3,8 @@ const express = require('express'),
   User = require('../models/user'),
   HttpStatus = require('http-status-codes'),
   fs = require('fs'),
-  path = require('path');
+  path = require('path'),
+  connection = require('./../database/db');
 
 const multer = require('multer');
 
@@ -42,11 +43,23 @@ const fileUpload = multer({
  *           $ref: '#/definitions/user'
  */
 router.get('/', function(req, res) {
-  User.find({}, { password: 0, image: 0 }, (err, user) => {
-    if (err || !user) {
+  let sql = 'select name, created_at from users';
+  connection.query(sql, (err, users, fields) => {
+    if (err || !users) {
       res.sendStatus(HttpStatus.NOT_FOUND);
     } else {
-      res.status(HttpStatus.OK).json(user);
+      res.status(HttpStatus.OK).json(users);
+    }
+  });
+});
+
+router.get('/:id', function(req, res) {
+  let sql = 'select name, created_at from users where name = ?';
+  connection.query(sql, req.params.id, (err, users, fields) => {
+    if (err || !users) {
+      res.sendStatus(HttpStatus.NOT_FOUND);
+    } else {
+      res.status(HttpStatus.OK).json(users);
     }
   });
 });
@@ -107,8 +120,12 @@ router.delete('/:id/image', fileUpload, function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  const user = new User(req.body);
-  user.save(function(err, savedUser) {
+  let sql = 'insert into users SET ?'
+  const user = {
+    name: req.body.name,
+    password: req.body.password
+  }
+  connection.query(sql, user, (err, savedUser, fields) => {
     if (err) {
       console.log(err);
       res.status(HttpStatus.BAD_REQUEST).json(err);
@@ -187,7 +204,8 @@ router.put('/:id', function(req, res) {
 });
 
 router.delete('/:id', function(req, res) {
-  User.findByIdAndRemove(req.params.id, function(err, user) {
+  let sql = "delete from users where name = ? ";
+  connection.query(sql, req.params.id, (err, user, fields) => {
     if (err) {
       res.status(HttpStatus.BAD_REQUEST).json(err);
     } else {

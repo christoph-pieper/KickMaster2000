@@ -13,7 +13,7 @@ let url =
   "/" +
   dbconfig.dbname;
 
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 
 mongoose.connect(
     url,
@@ -48,6 +48,25 @@ process.on("SIGINT", function() {
     console.log('Closed by User');
     process.exit(0);
   });
+});*/
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : dbconfig.url,
+  port: dbconfig.port,
+  user     : dbconfig.user,
+  password : dbconfig.pwd,
+  database: dbconfig.dbname
 });
 
-module.exports = db;
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+
+  console.log('connected as id ' + connection.threadId);
+});
+
+
+module.exports = connection;

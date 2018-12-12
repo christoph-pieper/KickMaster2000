@@ -45,7 +45,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-const db = require('./database/db');
 const session = require("express-session");
 
 app.use(
@@ -110,3 +109,4 @@ app.get('/swagger.json', function(req, res) {   res.setHeader('Content-Type', 'a
 io.on('connect', (socket) => {
   console.log('connected');
 });
+
