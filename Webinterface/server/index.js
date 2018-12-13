@@ -88,15 +88,18 @@ const allowedExt = [
   '.woff',
   '.ttf',
   '.svg',
+  '.mp4'
 ];
 
-/* app.get('*', (req, res) => {
+app.get('*', (req, res) => {
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-    res.sendFile(path.resolve(`public/${req.url}`));
+    console.log(__basedir);
+    console.log(req.url);
+    res.sendFile(path.resolve(path.join('dist/Webinterface', `${req.url}`)));
   } else {
     res.sendFile(path.resolve('dist/Webinterface/index.html'));
 }
-})*/
+})
 
 app.use(router);
 
@@ -105,6 +108,8 @@ const swaggerUi = require('swagger-ui-express');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/swagger.json', function(req, res) {   res.setHeader('Content-Type', 'application/json');   res.send(swaggerSpec); });
+
+
 
 io.on('connect', (socket) => {
   console.log('connected');

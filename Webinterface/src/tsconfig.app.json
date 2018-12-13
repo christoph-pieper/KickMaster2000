@@ -1,11 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
+    "outDir": "../dist",
     "types": []
   },
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": false,
+    "strictMetadataEmit": true,
+  }
 }
