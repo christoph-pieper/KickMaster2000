@@ -7,7 +7,7 @@ node('linux') {
   stage('checkout') {
     checkout scm
 
-    def changeLogSets = currentBuild.rawBuild.changeSets
+    def changeLogSets = currentBuild.changeSets
 
     try{
       for (int i = 0; i < changeLogSets.size(); i++) {
