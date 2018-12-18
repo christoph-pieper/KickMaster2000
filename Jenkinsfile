@@ -6,7 +6,6 @@ node('linux') {
 
   stage('checkout') {
     checkout scm
-    mvnHome = tool 'maven'
 
     def changeLogSets = currentBuild.rawBuild.changeSets
 
