@@ -22,5 +22,11 @@ node('linux') {
     }
   }
 
+  node('dotnet') {
+      stage('C++ compile') {
+
+        }
+
+    }
 
 }
