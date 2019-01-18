@@ -22,6 +22,10 @@ node('linux') {
     }
   }
 
+  stage('Git pull on Pi') {
+     sh "sshpass -p 'strathaus' ssh -o StrictHostKeyChecking=no fabian@KickMaster2000 ./update.sh"
+    }
+
   node('dotnet') {
       stage('C++ compile') {
 
