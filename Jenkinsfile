@@ -14,7 +14,7 @@ node('linux') {
         def entries = changeLogSets[i].items
         for (int j = 0; j < entries.length; j++) {
           def entry = entries[j]
-          slackSend (color: '#C8D400', channel: "#tipp-kick-uhr", message: "Checkout #${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}")
+          // slackSend (color: '#C8D400', channel: "#tipp-kick-uhr", message: "Checkout #${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}")
         }
       }
     }catch(err){
