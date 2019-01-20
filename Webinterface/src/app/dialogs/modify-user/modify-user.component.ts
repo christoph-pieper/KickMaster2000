@@ -1,10 +1,8 @@
 import { environment } from './../../../environments/environment';
 import { User } from './../../entities/user';
-import { Component, OnInit, Inject, Optional, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { XhrFactory, HttpXhrBackend } from '@angular/common/http';
 
 @Component({
   selector: 'app-modify-user',
@@ -23,9 +21,7 @@ export class ModifyUserComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModifyUserComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public user: User,
-    public userService: UserServiceService,
-    private sanitizer: DomSanitizer,
-    private cdRef: ChangeDetectorRef
+    public userService: UserServiceService
   ) {
     if (!user) {
       this.user = new User();

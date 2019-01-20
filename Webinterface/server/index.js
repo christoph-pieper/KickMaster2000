@@ -65,9 +65,7 @@ app.use(
 const server = require('http').createServer(app);
 const path = require('path');
 
-server.listen(port, () => {
-  console.log('Server hört auf Port: ' + port);
-});
+
 
 const io = require('socket.io')(server);
 
@@ -75,8 +73,20 @@ const version = "v1";
 const rootpath = "/api/" + version + "/";
 
 router.use(rootpath + "users", require("./controllers/users"));
+router.use(rootpath + "table", require("./controllers/table"));
+router.use(rootpath + "matchmaking", require("./controllers/matchmaking"));
+router.use(rootpath + "seasons", require("./controllers/seasons"));
 router.use(rootpath + "live", require("./controllers/live")(io));
 
+
+
+app.use(router);
+
+const swaggerUi = require('swagger-ui-express');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.get('/swagger.json', function(req, res) {   res.setHeader('Content-Type', 'application/json');   res.send(swaggerSpec); });
 
 const allowedExt = [
   '.js',
@@ -96,21 +106,15 @@ app.get('*', (req, res) => {
     console.log(__basedir);
     console.log(req.url);
     res.sendFile(path.resolve(path.join('dist/Webinterface', `${req.url}`)));
-  } else {
+  }
+  else {
     res.sendFile(path.resolve('dist/Webinterface/index.html'));
-}
+  }
 })
 
-app.use(router);
-
-const swaggerUi = require('swagger-ui-express');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-app.get('/swagger.json', function(req, res) {   res.setHeader('Content-Type', 'application/json');   res.send(swaggerSpec); });
-
-
-
+server.listen(port, () => {
+  console.log('Server hört auf Port: ' + port);
+});
 io.on('connect', (socket) => {
   console.log('connected');
 });

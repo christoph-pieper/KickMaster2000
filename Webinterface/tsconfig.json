@@ -11,11 +11,15 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/typings.d.ts"
     ],
     "lib": [
       "es2017",
       "dom"
+    ],
+    "types": [
+      "jquery"
     ]
   }
 }

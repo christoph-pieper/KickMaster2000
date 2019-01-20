@@ -1,0 +1,6 @@
+
+<mat-grid-list gutterSize="8em" cols="3" rowHeight="2:1">
+    <mat-grid-tile class="mat-elevation-z8" *ngFor="let match of matches">
+      <app-match [match]="match"></app-match>
+    </mat-grid-tile>
+  </mat-grid-list>

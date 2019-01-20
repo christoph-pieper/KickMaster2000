@@ -43,7 +43,7 @@ const fileUpload = multer({
  *           $ref: '#/definitions/user'
  */
 router.get('/', function(req, res) {
-  let sql = 'select name, created_at from users';
+  let sql = 'select _id, name, created_at from users';
   connection.query(sql, (err, users, fields) => {
     if (err || !users) {
       res.sendStatus(HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-  let sql = 'select name, created_at from users where name = ?';
+  let sql = 'select _id, name, created_at from users where _id = ?';
   connection.query(sql, req.params.id, (err, users, fields) => {
     if (err || !users) {
       res.sendStatus(HttpStatus.NOT_FOUND);
@@ -65,13 +65,14 @@ router.get('/:id', function(req, res) {
 });
 
 router.get('/:id/image', function(req, res) {
+  let sql = 'select imageContentType, imageData from users where _id = ?';
   if (req.params.id) {
-    User.findById(req.params.id, (err, user) => {
+    connection.query(sql, req.params.id, (err, user, fields) => {
       if (err || !user) {
         res.sendStatus(HttpStatus.NOT_FOUND);
-      } else if (user.image.contentType && user.image.data) {
-        res.contentType(user.image.contentType);
-        res.send(user.image.data);
+      } else if (user[0].imageContentType && user[0].imageData) {
+        res.contentType(user[0].imageContentType);
+        res.send(user[0].imageData);
       } else {
         res.sendFile(__basedir + '/static/default-user-image.png');
       }
@@ -82,21 +83,21 @@ router.get('/:id/image', function(req, res) {
 });
 
 router.post('/:id/image', fileUpload, function(req, res) {
+  let sql = 'update users SET ? where _id = ?';
   if (req.params.id) {
-    const newUser = {
-      image: {
-        contentType: null,
-        data: null
-      }
-    };
-    newUser.image.contentType = req.files.image[0].mimetype;
     fs.readFile(req.files.image[0].path, (err, data) => {
-      newUser.image.data = data;
-      User.findByIdAndUpdate(req.params.id, newUser, (err, user) => {
+      if(err) {
+        res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+      const image = {
+        imageContentType: req.files.image[0].mimetype,
+        imageData: data
+      }
+      connection.query(sql, [image, req.params.id], (err, user, fields) => {
         if (err || !user) {
           res.sendStatus(500);
         } else {
-          res.send(user.image.data);
+          res.sendStatus(200);
         }
       });
     });
@@ -106,8 +107,9 @@ router.post('/:id/image', fileUpload, function(req, res) {
 });
 
 router.delete('/:id/image', fileUpload, function(req, res) {
+  let sql = 'update users SET imageContentType=NULL, imageData=NULL where _id = ?';
   if (req.params.id) {
-    User.findByIdAndUpdate(req.params.id, { image: null }, (err, user) => {
+    connection.query(sql, req.params.id, (err, user, fields) => {
       if (err || !user) {
         res.sendStatus(500);
       } else {
@@ -137,7 +139,7 @@ router.post('/', function(req, res) {
 
 router.get('/:id/audio', function(req, res) {
   fs.exists(__basedir + '/data/audio/' + req.params.id + '.mp3',
-    (exists) => {
+    (exists) => {console.log(exists);
       if (exists) {
         res.sendFile(
           path.join(__basedir, '/data/audio/' + req.params.id + '.mp3')
@@ -162,9 +164,10 @@ const fileUploadAudio = multer({ storage: storage }).fields([
 ]);
 
 router.post('/:id/audio', fileUploadAudio, function(req, res) {
+  let sql = 'select _id from users where _id = ?';
   if (req.params.id) {
-    User.findById(req.params.id, (err, user) => {
-      if (err || !user) {
+    connection.query(sql, req.params.id, (err, user) => {
+      if (err || !user || user.length != 1) {
         res.sendStatus(HttpStatus.NOT_FOUND);
       } else {
         fileUploadAudio(req, res, (err) => {
@@ -190,11 +193,9 @@ router.delete('/:id/audio', fileUpload, function(req, res) {
 });
 
 router.put('/:id', function(req, res) {
-  let updatetUser = new User(req.body);
-  User.findByIdAndUpdate(req.params.id, updatetUser, { new: true }, function(
-    err,
-    user
-  ) {
+  let sql = 'update users SET ? where _id = ?'
+  delete req.body.created_at;
+  connection.query(sql, [req.body, req.params.id], (err, user, fields) => {
     if (err) {
       res.status(HttpStatus.BAD_REQUEST).json(err);
     } else {
@@ -204,7 +205,7 @@ router.put('/:id', function(req, res) {
 });
 
 router.delete('/:id', function(req, res) {
-  let sql = "delete from users where name = ? ";
+  let sql = "delete from users where _id = ? ";
   connection.query(sql, req.params.id, (err, user, fields) => {
     if (err) {
       res.status(HttpStatus.BAD_REQUEST).json(err);

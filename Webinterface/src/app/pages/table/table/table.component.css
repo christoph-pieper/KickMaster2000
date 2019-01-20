@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+
+mat-cell, mat-header-cell {
+  justify-content: center;
+}
+
+.green-text {
+  color: lightgreen;
+}
+
+.red-text {
+  color: lightcoral;
+}

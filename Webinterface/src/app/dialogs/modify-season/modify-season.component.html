@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ headline }}</h1>
+<div mat-dialog-content>
+    <p>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="season.name"
+            cdkFocusInitial
+            placeholder="Name"
+            (keyup.enter)="onSave()"
+          />
+        </mat-form-field>
+    </p>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()">Ok</button>
+    <button mat-button (click)="onNoClick()">Schließen</button>
+  </div>

@@ -1,0 +1,54 @@
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Saison-Verwaltung">
+
+      <button mat-button (click)="addSeason()">Neue Saison anlegen</button>
+
+        <app-seasontable [seasons]="seasons" (onArchive)="archivedSeason($event)"></app-seasontable>
+
+        <button mat-button (click)="loadArchivedSeasons()">Lade archivierte Seasons</button>
+
+        <app-seasontable [seasons]="archivedSeasons" [archived]="true"></app-seasontable>
+
+
+    </mat-tab>
+    <mat-tab label="Spielplan-Berechnung">
+        <button mat-button (click)="calcMatches()">Berechne Spielplan</button>
+
+        <div class="two-columns">
+          <div class="two-columns-column">
+
+            <h3 class="center">Spieltage</h3>
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let matchday of matchdays">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Spieltag {{matchday.index}}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <mat-list role="list">
+                      <mat-list-item role="listitem" *ngFor="let match of matchday.matches">{{match[0].name}} : {{match[1].name}}</mat-list-item>
+                      <mat-list-item *ngIf="matchday.wildcardPlayer" role="listitem">{{matchday.wildcardPlayer.name}} setzt aus</mat-list-item>
+                  </mat-list>
+
+
+
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+
+          <div class="two-columns-column">
+
+              <h3 class="center">Pokal-Begegnungen der ersten Runde:</h3>
+              <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let match of cupMatches">{{match[0].name}} : {{match[1] ? match[1].name : '***Wildcard***'}}</mat-list-item>
+              </mat-list>
+          </div>
+        </div>
+
+
+    </mat-tab>
+
+  </mat-tab-group>
+
+

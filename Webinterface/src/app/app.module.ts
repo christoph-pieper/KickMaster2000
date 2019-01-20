@@ -1,3 +1,4 @@
+import { SeasonsService } from './services/seasons.service';
 import { LiveService } from './services/websocket/live.service';
 import { SidenavComponent } from './layout/sidenav/sidenav.component';
 import { MainComponent } from './pages/main/main.component';
@@ -22,7 +23,11 @@ import {
   MatGridListModule,
   MatCardModule,
   MatProgressBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatTooltipModule
 } from '@angular/material';
 import { UsersComponent } from './pages/users/users.component';
 import { ModifyUserComponent } from './dialogs/modify-user/modify-user.component';
@@ -36,6 +41,22 @@ import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 import { environment } from 'src/environments/environment';
 import { RulesComponent } from './pages/rules/rules.component';
 import { MomentModule } from 'ngx-moment';
+import { PokalComponent } from './pages/pokal/pokal.component';
+import { TableComponent } from './pages/table/table.component';
+import { TableService } from './services/table.service';
+import { TableMatchesComponent } from './pages/table/matches/matches.component';
+import { TableTableComponent } from './pages/table/table/table.component';
+import { MatchComponent } from './shared/match/match.component';
+import { MatchmakingComponent } from './pages/matchmaking/matchmaking.component';
+import { ModifySeasonComponent } from './dialogs/modify-season/modify-season.component';
+import { SeasontableComponent } from './pages/matchmaking/seasontable/seasontable.component';
+
+import * as $ from 'jquery';
+
+window["$"] = $;
+window["jQuery"] = $;
+// import 'jquery-bracket';
+import 'bootstrap-daterangepicker';
 
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
@@ -48,7 +69,15 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     SidenavComponent,
     ModifyUserComponent,
     LiveViewComponent,
-    RulesComponent
+    RulesComponent,
+    PokalComponent,
+    TableComponent,
+    TableTableComponent,
+    TableMatchesComponent,
+    MatchComponent,
+    MatchmakingComponent,
+    ModifySeasonComponent,
+    SeasontableComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -73,15 +102,22 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     MatCardModule,
     MatProgressBarModule,
     MatToolbarModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatTooltipModule,
     MomentModule
   ],
   providers: [
     UserServiceService,
+    TableService,
     LiveService,
-    WebsocketService
+    WebsocketService,
+    SeasonsService
   ],
   entryComponents: [
-    ModifyUserComponent
+    ModifyUserComponent,
+    ModifySeasonComponent
   ],
   bootstrap: [AppComponent]
 })

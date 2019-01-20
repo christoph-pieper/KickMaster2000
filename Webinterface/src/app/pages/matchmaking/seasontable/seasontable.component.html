@@ -1,0 +1,56 @@
+<mat-table [dataSource]="dataSource" *ngIf="dataSource && dataSource.data.length > 0" [trackBy]="trackingFunction">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row._id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="current">
+    <mat-header-cell *matHeaderCellDef> Aktiv </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox [(ngModel)]="row.current" (change)="activateSeason($event, row)" [disabled]="archived"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="initialized">
+      <mat-header-cell *matHeaderCellDef> Spielplan erstellt </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.initialized" disabled matTooltip="Um einen Spielplan zu erstellen, sollten Sie auf den Reiter 'Spielplan-Berechnung' gehen."></mat-checkbox>
+    </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="closed">
+        <mat-header-cell *matHeaderCellDef> Abgeschlossen </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox [(ngModel)]="row.closed" (change)="putSeason(row)" [disabled]="archived"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+          <mat-header-cell *matHeaderCellDef> Bearbeiten </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="addSeason(row)" [disabled]="archived">
+                <mat-icon class="mat-18">edit</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="archive">
+            <mat-header-cell *matHeaderCellDef> {{ archived ? 'Wiederherstellen' : 'Archivieren'}}</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-icon-button (click)="archiveSeason(row)">
+                <mat-icon class="mat-18">{{row.archived ? 'unarchive' : 'archive'}}</mat-icon>
+            </button>
+          </mat-cell>
+          </ng-container>
+  <!-- Header and Row Declarations -->
+
+  <mat-header-row *matHeaderRowDef="displayedSeasonsColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedSeasonsColumns"></mat-row>
+
+</mat-table>

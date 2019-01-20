@@ -1,0 +1,7 @@
+.two-columns{
+  display: flex;
+}
+
+.two-columns-column{
+  flex: 1;
+}
