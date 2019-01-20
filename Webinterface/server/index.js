@@ -66,7 +66,6 @@ const server = require('http').createServer(app);
 const path = require('path');
 
 
-
 const io = require('socket.io')(server);
 
 const version = "v1";
@@ -105,11 +104,10 @@ app.get('*', (req, res) => {
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
     console.log(__basedir);
     console.log(req.url);
-    res.sendFile(path.resolve(path.join('dist/Webinterface', `${req.url}`)));
-  }
-  else {
-    res.sendFile(path.resolve('dist/Webinterface/index.html'));
-  }
+    res.sendFile(path.resolve(path.join('./dist/Webinterface', `${req.url}`)));
+  } else {
+    res.sendFile(path.resolve('./dist/Webinterface/index.html'));
+}
 })
 
 server.listen(port, () => {
