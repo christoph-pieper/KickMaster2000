@@ -1,4 +1,4 @@
-const port = 80;
+const port = 8080;
 
 global.__basedir = __dirname;
 
