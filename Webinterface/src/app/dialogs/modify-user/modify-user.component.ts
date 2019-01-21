@@ -1,8 +1,8 @@
+import { UserServiceService } from './../../services/user-service.service';
 import { environment } from './../../../environments/environment';
 import { User } from './../../entities/user';
 import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-modify-user',

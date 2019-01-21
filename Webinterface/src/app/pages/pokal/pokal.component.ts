@@ -29,7 +29,7 @@ export class PokalComponent implements OnInit, AfterViewInit {
       init: this.minimalData
     });*/
 
-    let bla = $('input').daterangepicker();
-    console.log(bla)
+    // let bla = $('input').daterangepicker();
+    // console.log(bla)
   }
 }

@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment.prod';
 import { SeasonsService } from './services/seasons.service';
 import { LiveService } from './services/websocket/live.service';
 import { SidenavComponent } from './layout/sidenav/sidenav.component';
@@ -37,8 +38,7 @@ import { UserServiceService } from './services/user-service.service';
 import { LiveViewComponent } from './layout/live-view/live-view.component';
 import { WebsocketService } from './services/websocket/websocket.service';
 
-import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
-import { environment } from 'src/environments/environment';
+// import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 import { RulesComponent } from './pages/rules/rules.component';
 import { MomentModule } from 'ngx-moment';
 import { PokalComponent } from './pages/pokal/pokal.component';
@@ -58,7 +58,7 @@ window["jQuery"] = $;
 // import 'jquery-bracket';
 import 'bootstrap-daterangepicker';
 
-const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
+// const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 
 @NgModule({
@@ -83,7 +83,7 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     RouterModule.forRoot(
       AppRoutes // <-- debugging purposes only
     ),
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     BrowserModule,
     BrowserAnimationsModule,
     FileUploadModule,

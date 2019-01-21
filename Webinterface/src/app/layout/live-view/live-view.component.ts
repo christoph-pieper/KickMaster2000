@@ -1,3 +1,5 @@
+import { User } from './../../entities/user';
+import { environment } from './../../../environments/environment';
 import { LiveService } from './../../services/websocket/live.service';
 import {
   Component,
@@ -6,7 +8,6 @@ import {
   AfterViewInit,
   OnDestroy
 } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import {
   trigger,
   state,
@@ -15,9 +16,7 @@ import {
   animate
 } from '@angular/animations';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/entities/user';
 import * as moment from 'moment';
-import { sprintf } from 'sprintf-js';
 
 @Component({
   selector: 'app-live-view',

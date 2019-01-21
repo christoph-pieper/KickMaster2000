@@ -1,7 +1,7 @@
+import { environment } from './../../environments/environment';
 import { User } from '../entities/user';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { PlannedMatchday } from '../entities/plannedMatchday';
 

@@ -1,6 +1,6 @@
+import { TableService } from './../../../services/table.service';
+import { TableUser } from './../../../entities/tableuser';
 import { Component, OnInit } from '@angular/core';
-import { TableUser } from 'src/app/entities/tableuser';
-import { TableService } from 'src/app/services/table.service';
 
 @Component({
   selector: 'app-table-table',

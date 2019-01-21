@@ -1,13 +1,11 @@
+import { PlannedMatchday } from './../../entities/plannedMatchday';
+import { MatchmakingService } from './../../services/matchmaking.service';
 import { User } from './../../entities/user';
 import { ModifySeasonComponent } from './../../dialogs/modify-season/modify-season.component';
 import { SeasonsService } from './../../services/seasons.service';
 import { Season } from './../../entities/season';
 import { Component, OnInit } from '@angular/core';
-import { MatchmakingService } from 'src/app/services/matchmaking.service';
-import { PlannedMatchday } from 'src/app/entities/plannedMatchday';
-import { Event } from '@angular/router';
-import { EventEmitter } from 'events';
-import { MatCheckboxChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-matchmaking',

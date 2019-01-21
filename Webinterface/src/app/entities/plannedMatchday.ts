@@ -1,4 +1,4 @@
-import { User } from 'src/app/entities/user';
+import { User } from './user';
 
 export class PlannedMatchday {
   index: number;

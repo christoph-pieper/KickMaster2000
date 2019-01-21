@@ -1,9 +1,9 @@
+import { SeasonsService } from './../../../services/seasons.service';
 import { MatchmakingService } from './../../../services/matchmaking.service';
 import { ModifySeasonComponent } from './../../../dialogs/modify-season/modify-season.component';
 import { MatCheckboxChange, MatDialog, MatTableDataSource } from '@angular/material';
 import { Season } from './../../../entities/season';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SeasonsService } from 'src/app/services/seasons.service';
 
 @Component({
   selector: 'app-seasontable',
@@ -63,7 +63,7 @@ export class SeasontableComponent implements OnInit {
     })
   }
 
-  addSeason(season?) {
+  addSeason(season?: Season) {
     const dialogRef = this.dialog.open(ModifySeasonComponent, {
       width: '650px',
       data: season

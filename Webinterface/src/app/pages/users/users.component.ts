@@ -1,4 +1,4 @@
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { UserServiceService } from './../../services/user-service.service';
 import { ModifyUserComponent } from './../../dialogs/modify-user/modify-user.component';
 import { environment } from './../../../environments/environment';
 import { User } from './../../entities/user';
